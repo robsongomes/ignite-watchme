@@ -1,4 +1,5 @@
-import { MovieCard } from './MovieCard'
+import { memo } from "react";
+import { MovieCard } from "./MovieCard";
 interface Movie {
   imdbID: string;
   Title: string;
@@ -10,32 +11,38 @@ interface Movie {
   Runtime: string;
 }
 interface ContentProps {
-  movies: Movie[]
+  movies: Movie[];
   selectedGenre: {
-    title: string
-  }
+    title: string;
+  };
 }
 
-export function Content(props: ContentProps) {
-  
+function ContentComponent(props: ContentProps) {
+  console.log("Renderizou content");
+
   return (
     <div className="container">
-        <header>
-          <span className="category">Categoria:<span> {props.selectedGenre.title}</span></span>
-        </header>
+      <header>
+        <span className="category">
+          Categoria:<span> {props.selectedGenre.title}</span>
+        </span>
+      </header>
 
-        <main>
-          <div className="movies-list">
-            {props.movies.map(movie => (
-              <MovieCard 
-                key ={movie.imdbID} 
-                title={movie.Title} 
-                poster={movie.Poster} 
-                runtime={movie.Runtime} 
-                rating={movie.Ratings[0].Value} />
-            ))}
-          </div>
-        </main>
-      </div>
-  )
+      <main>
+        <div className="movies-list">
+          {props.movies.map((movie) => (
+            <MovieCard
+              key={movie.imdbID}
+              title={movie.Title}
+              poster={movie.Poster}
+              runtime={movie.Runtime}
+              rating={movie.Ratings[0].Value}
+            />
+          ))}
+        </div>
+      </main>
+    </div>
+  );
 }
+
+export const Content = memo(ContentComponent);
